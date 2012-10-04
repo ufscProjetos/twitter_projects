@@ -1,3 +1,5 @@
+import twitter4j.TwitterFactory;
+
 
 public class Main {
 
@@ -8,7 +10,8 @@ public class Main {
 		// TODO Auto-generated method stub
 		 // The factory instance is re-useable and thread safe.
 	    Twitter twitter = new TwitterFactory().getInstance();
-	    Status status = twitter.updateStatus(latestStatus);
+	    Object latestStatus;
+		Status status = twitter.updateStatus(latestStatus);
 	    System.out.println("Successfully updated the status to [" + status.getText() + "].");
 	}
 
