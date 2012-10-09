@@ -6,7 +6,7 @@ import Grupo3.BlueBird.logica.Autenticacao;
 public class ProgramaTwitter {
 
 	/**
-	 * @param args
+	 * o método main instancia a classe Autenticacao e a classe Janela e logo após chama o método executa da classe janela
 	 */
 	public static void main(String[] args) {
 		Autenticacao autenticacao = new Autenticacao();
