@@ -15,9 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import Grupo3.BlueBird.igu.menu.Opcao;
-import Grupo3.BlueBird.logica.AbreBrowser;
 import Grupo3.BlueBird.logica.Autenticacao;
 
 public class PainelLogin extends JPanel implements ActionListener{
@@ -27,15 +27,17 @@ public class PainelLogin extends JPanel implements ActionListener{
 	 * elementos visuais da tela de login bem como as suas funções.
 	 */
 	
-	Autenticacao autenticacao; 						// Atributo que encapsula uma instância da classe Autenticacao
-	AbreBrowser ab; 								// Atributo que encapsula uma instância da classe AbreBrowser
+	Autenticacao autenticacao; 						// Atributo que encapsula uma instância da classe AbreBrowser
+	Janela janela;
+	Twitter twitter;
 	JTextField codigo; 								// Campo de texto - onde será digitado o código de autenticação
 	JButton botaoAutenticar, botaoEntrar; 			// Botões
-	JLabel labelImagem; 							// JLabel responsável por armazenar a imagem - pássaro azul
+	JLabel labelImagem, labelInfo; 					// JLabel responsável por armazenar a imagem - pássaro azul
 	String expRegCodigo; 							// Variável que armazena a expressão regular de validação do código digitado pelo usuário
 	
-	public PainelLogin(Autenticacao autenticacao){ 	// Construtor
+	public PainelLogin(Autenticacao autenticacao, Janela janela){ 	// Construtor
 		this.autenticacao = autenticacao; 
+		this.janela = janela;
 		expRegCodigo = "\\d{7}"; 					// Exprssão regular de autenticação do código
 		defineComponentes(); 
 		organizaComponentes();	
@@ -43,6 +45,7 @@ public class PainelLogin extends JPanel implements ActionListener{
 	}
 
 	private void defineComponentes() { 				// Método que define (cria) os componentes visuais
+		//labelInfo = new JLabel(new ImageIcon(getClass().getResource("/imagens/imagem1.jpg")));
 		labelImagem = new JLabel(new ImageIcon(getClass().getResource("/imagens/img.png")));		
 		botaoAutenticar = new JButton("Autenticar");
 		botaoAutenticar.addActionListener(this);
@@ -54,7 +57,7 @@ public class PainelLogin extends JPanel implements ActionListener{
 	}
 
 	private void organizaComponentes() { 			// Método que organiza os componentes na tela		
-		GroupLayout layout = new GroupLayout(this); // stancia um objeto GroupLayout - gerenciador de layout
+		GroupLayout layout = new GroupLayout(this); // instancia um objeto GroupLayout - gerenciador de layout
 		layout.setAutoCreateGaps(true); 
 		layout.setAutoCreateContainerGaps(true);
 		setLayout(layout);
@@ -66,20 +69,20 @@ public class PainelLogin extends JPanel implements ActionListener{
 		{
 			SequentialGroup sg = layout.createSequentialGroup(); 	// cria um grupo sequencial
 			sg.addComponent(labelImagem); 							// adiciona a imagem no local específico
-			ParallelGroup pg = layout.createParallelGroup(Alignment.LEADING);			// cria um grupo paralelo
-			pg.addComponent(botaoAutenticar); 						// adiciona o botão Autenticar
+			ParallelGroup pg2 = layout.createParallelGroup(Alignment.LEADING);			// cria um grupo paralelo
+			pg2.addComponent(botaoAutenticar); 						// adiciona o botão Autenticar
 			SequentialGroup sg2 = layout.createSequentialGroup();   // cria outro grupo sequencial
 			sg2.addComponent(codigo);	// adiciona o campo de texto
 			sg2.addComponent(botaoEntrar); // adiciona o botao Entrar
-			pg.addGroup(sg2); // adiciona o grupo armazenado na variável sg2 ao grupo pg
-			sg.addGroup(pg);	// adiciona o grupo pg ao layout sg
+			pg2.addGroup(sg2); // adiciona o grupo armazenado na variável sg2 ao grupo pg
+			sg.addGroup(pg2);	// adiciona o grupo pg ao layout sg
 			layout.setHorizontalGroup(sg); // define o layout no painel
 		}
 		
 		// Dimensão Vertical
 		
 		/**
-		 * Na dimensão vertical há algumas diferenças quanto ao local onde serão adicionados os botõs e campos de texto e imagem
+		 * Na dimensão vertical há algumas diferenças quanto ao local onde serão adicionados os botões e campos de texto e imagem
 		 * bem como pode haver mais ou menos grupos.
 		 */
 		
@@ -102,16 +105,22 @@ public class PainelLogin extends JPanel implements ActionListener{
 	@Override // significa que este método está sendo sobreescrito de uma interface
 	public void actionPerformed(ActionEvent e) { // método da interface ActionListener, responsável por tratar os eventos gerados pelos botões e munus
 		if(e.getActionCommand() == "Autenticar"){
-			try {
-				autenticacao.autentica(); // se o botão Autenticar for clicado, chama o método autentica da classe Autenticação
-			} catch (TwitterException e1) {
-				e1.printStackTrace();
-			}
+			autenticacao.instanciaObjetoTwitter(); // se o botão Autenticar for clicado, chama o método autentica da classe Autenticação
 		} else {
-			// mensagem exibida ao clicar em Entrar - isso será modificado, pois aqui será tratado o código fornecido pelo usuário
-			JOptionPane.showMessageDialog(this, "Espere um pouco!\n A partir deste momento " +    
-					"as informações contidas neste\n programa são restritas aos desenvolvedores."
-					, "Atenção", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/imagens/cavalo.jpeg")));						
+			if(autenticacao.getIntanciouObjetoTwitter()){
+				try {
+					twitter = autenticacao.autentica(codigo.getText());
+					janela.definePainelPrincipal(twitter);
+					janela.defineMenu();
+				} catch (TwitterException e1) {
+						JOptionPane.showMessageDialog(this, "Não foi possível validar o código " +
+								"fornecido!\n Você deverá gerar um novo código de autenticação. ", "Erro", JOptionPane.ERROR_MESSAGE);
+						autenticacao.instanciaObjetoTwitter();
+					}
+			} else {
+				JOptionPane.showMessageDialog(this, "Você precisa clicar no botão 'Autenticar' e\n gerar o código " +
+						"de autenticação!", "Atenção", JOptionPane.INFORMATION_MESSAGE);				
+			}
 		}
 	}
 	/**
@@ -146,6 +155,5 @@ public class PainelLogin extends JPanel implements ActionListener{
 					" estiver em formato válido, basta clicar no\n botão Entrar para utilizar o programa.",
 					"Utilização", JOptionPane.INFORMATION_MESSAGE);
 		}
-	}
-
+	}	
 }

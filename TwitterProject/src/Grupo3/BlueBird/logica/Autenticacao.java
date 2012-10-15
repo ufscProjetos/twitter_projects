@@ -1,5 +1,6 @@
 package Grupo3.BlueBird.logica;
 
+import Grupo3.BlueBird.igu.Janela;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -13,40 +14,38 @@ import twitter4j.auth.RequestToken;
 
 public class Autenticacao {
 	
+	Janela janela;
 	Twitter twitter;
-	String codigo;
-    AccessToken accessToken = null;
+    AccessToken accessToken;
     RequestToken requestToken;
+    boolean instanciou;
 	
 	public Autenticacao(){
-		twitter = new TwitterFactory().getInstance(); // instancia um objeto Twitter		
+		
 	}
 	
-	public void autentica() throws TwitterException{ 
-		// define, na classe twitter, os códigos gerados quando a aplicação é registrada no twitter 
+	public void instanciaObjetoTwitter() {	
+		twitter = new TwitterFactory().getInstance(); // instancia um objeto Twitter	
+		// define, na classe twitter, os códigos gerados quando a aplicação é registrada no twitter	
 		twitter.setOAuthConsumer("8uOlads04QlSHOmMkbPKZw", "bFRFwXhWouJJaxtFnS2nAK8ZpnxyRRWUtT0a2QRldI");
-		requestToken = twitter.getOAuthRequestToken();    // requisita o RequestToken
+		try {
+			requestToken = twitter.getOAuthRequestToken();
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
 	    String url = requestToken.getAuthorizationURL();	// requisita a url
         AbreBrowser abreBrowser = new AbreBrowser(); // chama o método abreBrowser da classe AbreBrowser para abrir o browser
-        abreBrowser.abreBrowser(url);         
+        abreBrowser.abreBrowser(url); 
+        instanciou = true;
 	}
 	
-	/*public void setCodigo(String codigo){
-		this.codigo = codigo;
-		try{
-            if(codigo.length() > 0){
-              accessToken = twitter.getOAuthAccessToken(requestToken, codigo);
-              new MeuTwitter(twitter);
-            }else{
-              accessToken = twitter.getOAuthAccessToken();
-            }
-         } catch (TwitterException te) {
-           if(401 == te.getStatusCode()){
-             System.out.println("Unable to get the access token.");
-           }else{
-             te.printStackTrace();
-           }		
-         }
-	}*/
+	public Twitter autentica(String codigo) throws TwitterException {
+        accessToken = twitter.getOAuthAccessToken(requestToken, codigo);
+		return this.twitter;
+	}
+	
+	public boolean getIntanciouObjetoTwitter(){
+		return instanciou;
+	}
 	
 }

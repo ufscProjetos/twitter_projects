@@ -1,8 +1,10 @@
 package Grupo3.BlueBird.igu;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import twitter4j.Twitter;
 import Grupo3.BlueBird.igu.menu.BarraMenuLogin;
 import Grupo3.BlueBird.logica.Autenticacao;
 
@@ -11,18 +13,17 @@ public class Janela extends JFrame implements ActionListener {
 	Autenticacao autenticacao;
 	BarraMenuLogin br;
 	PainelLogin painelLogin;
+	PainelPrincipal painelPrincipal;
 	
 	public Janela(Autenticacao autenticacao){ // construtor
 		super ("Blue Bird"); // define o título da janela
-		br = new BarraMenuLogin(this); // instancia a barra de menu
-		setJMenuBar(br); // insere a barra de menu na janela
 		this.autenticacao = autenticacao;
 		setDefaultCloseOperation(EXIT_ON_CLOSE); // encerra o programa ao fechar a janela
 		definePainelLogin(); // define o painel de login
 	}	
 	
 	private void definePainelLogin() {
-		painelLogin = new PainelLogin(autenticacao);
+		painelLogin = new PainelLogin(autenticacao, this);
 		setContentPane(painelLogin);
 		pack();
 		setLocationRelativeTo(null);		
@@ -41,6 +42,19 @@ public class Janela extends JFrame implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		painelLogin.trataOpcoesMenu(e);
+	}
+	
+	public void definePainelPrincipal(Twitter twitter){
+		painelPrincipal = new PainelPrincipal(twitter);
+		painelPrincipal.setPreferredSize(new Dimension(600, 300));
+		setContentPane(painelPrincipal);
+		pack();
+		setLocationRelativeTo(null);
+	}
+	
+	public void defineMenu(){
+		br = new BarraMenuLogin(this); // instancia a barra de menu
+		setJMenuBar(br); // insere a barra de menu na janela
 	}
 	
 	
