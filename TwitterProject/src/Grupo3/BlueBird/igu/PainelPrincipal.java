@@ -12,8 +12,8 @@ public class PainelPrincipal extends JPanel {
 	
 	public PainelPrincipal(Twitter twitter){
 		this.twitter = twitter;
-		atualizaStatus();
-		JOptionPane.showMessageDialog(this, "Está Funcionando!", "PQP", JOptionPane.INFORMATION_MESSAGE);
+		//atualizaStatus();
+		JOptionPane.showMessageDialog(this, "Está Funcionando!", "Lindo!", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public void atualizaStatus(){

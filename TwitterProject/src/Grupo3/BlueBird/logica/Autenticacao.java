@@ -24,15 +24,11 @@ public class Autenticacao {
 		
 	}
 	
-	public void instanciaObjetoTwitter() {	
+	public void instanciaObjetoTwitter() throws TwitterException {	
 		twitter = new TwitterFactory().getInstance(); // instancia um objeto Twitter	
 		// define, na classe twitter, os códigos gerados quando a aplicação é registrada no twitter	
 		twitter.setOAuthConsumer("8uOlads04QlSHOmMkbPKZw", "bFRFwXhWouJJaxtFnS2nAK8ZpnxyRRWUtT0a2QRldI");
-		try {
-			requestToken = twitter.getOAuthRequestToken();
-		} catch (TwitterException e) {
-			e.printStackTrace();
-		}
+		requestToken = twitter.getOAuthRequestToken();
 	    String url = requestToken.getAuthorizationURL();	// requisita a url
         AbreBrowser abreBrowser = new AbreBrowser(); // chama o método abreBrowser da classe AbreBrowser para abrir o browser
         abreBrowser.abreBrowser(url); 

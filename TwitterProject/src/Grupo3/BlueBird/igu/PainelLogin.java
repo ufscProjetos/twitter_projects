@@ -105,21 +105,35 @@ public class PainelLogin extends JPanel implements ActionListener{
 	@Override // significa que este método está sendo sobreescrito de uma interface
 	public void actionPerformed(ActionEvent e) { // método da interface ActionListener, responsável por tratar os eventos gerados pelos botões e munus
 		if(e.getActionCommand() == "Autenticar"){
-			autenticacao.instanciaObjetoTwitter(); // se o botão Autenticar for clicado, chama o método autentica da classe Autenticação
+			try {
+				autenticacao.instanciaObjetoTwitter(); // se o botão Autenticar for clicado, chama o método autentica da classe Autenticação
+			} catch (TwitterException te) {
+					JOptionPane.showMessageDialog(this, "Não foi possível estabelecer a conexão com o " +
+							"servidor!\n Por favor, verifique sua conexão com a internet e\n tente novamente " +
+							"mais tarde. ", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		} else {
 			if(autenticacao.getIntanciouObjetoTwitter()){
 				try {
 					twitter = autenticacao.autentica(codigo.getText());
 					janela.definePainelPrincipal(twitter);
 					janela.defineMenu();
-				} catch (TwitterException e1) {
+				} catch (TwitterException te) {
+					if (te.getStatusCode() != 403) {
 						JOptionPane.showMessageDialog(this, "Não foi possível validar o código " +
 								"fornecido!\n Você deverá gerar um novo código de autenticação. ", "Erro", JOptionPane.ERROR_MESSAGE);
-						autenticacao.instanciaObjetoTwitter();
+						codigo.setText("");
+						botaoEntrar.setEnabled(false);
+					} else {
+						JOptionPane.showMessageDialog(this, "Solicitação negada!\n Verifique se você tem permição " +
+								"para acessar a página solicitada.", "Erro", JOptionPane.ERROR_MESSAGE);
 					}
+				}
 			} else {
 				JOptionPane.showMessageDialog(this, "Você precisa clicar no botão 'Autenticar' e\n gerar o código " +
-						"de autenticação!", "Atenção", JOptionPane.INFORMATION_MESSAGE);				
+						"de autenticação!", "Atenção", JOptionPane.INFORMATION_MESSAGE);		
+				codigo.setText("");
+				botaoEntrar.setEnabled(false);
 			}
 		}
 	}
