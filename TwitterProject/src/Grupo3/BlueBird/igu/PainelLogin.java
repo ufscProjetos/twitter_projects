@@ -45,7 +45,6 @@ public class PainelLogin extends JPanel implements ActionListener{
 	}
 
 	private void defineComponentes() { 				// Método que define (cria) os componentes visuais
-		//labelInfo = new JLabel(new ImageIcon(getClass().getResource("/imagens/imagem1.jpg")));
 		labelImagem = new JLabel(new ImageIcon(getClass().getResource("/imagens/img.png")));		
 		botaoAutenticar = new JButton("Autenticar");
 		botaoAutenticar.addActionListener(this);

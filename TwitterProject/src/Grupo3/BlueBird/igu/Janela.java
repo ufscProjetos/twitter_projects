@@ -1,6 +1,5 @@
 package Grupo3.BlueBird.igu;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -46,7 +45,7 @@ public class Janela extends JFrame implements ActionListener {
 	
 	public void definePainelPrincipal(Twitter twitter){
 		painelPrincipal = new PainelPrincipal(twitter);
-		painelPrincipal.setPreferredSize(new Dimension(600, 300));
+		//painelPrincipal.setPreferredSize(new Dimension(600, 300));
 		setContentPane(painelPrincipal);
 		pack();
 		setLocationRelativeTo(null);
