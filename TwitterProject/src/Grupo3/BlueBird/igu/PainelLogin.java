@@ -5,7 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.BorderFactory;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout.ParallelGroup;
@@ -17,8 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import Grupo3.BlueBird.igu.menu.Opcao;
-import Grupo3.BlueBird.logica.Autenticacao;
+import Grupo3.BlueBird.logica.MeuTwitter;
 
 public class PainelLogin extends JPanel implements ActionListener{
 	
@@ -27,7 +27,7 @@ public class PainelLogin extends JPanel implements ActionListener{
 	 * elementos visuais da tela de login bem como as suas funções.
 	 */
 	
-	Autenticacao autenticacao; 						// Atributo que encapsula uma instância da classe AbreBrowser
+	MeuTwitter mt;
 	Janela janela;
 	Twitter twitter;
 	JTextField codigo; 								// Campo de texto - onde será digitado o código de autenticação
@@ -35,13 +35,12 @@ public class PainelLogin extends JPanel implements ActionListener{
 	JLabel labelImagem, labelInfo; 					// JLabel responsável por armazenar a imagem - pássaro azul
 	String expRegCodigo; 							// Variável que armazena a expressão regular de validação do código digitado pelo usuário
 	
-	public PainelLogin(Autenticacao autenticacao, Janela janela){ 	// Construtor
-		this.autenticacao = autenticacao; 
+	public PainelLogin(MeuTwitter mt, Janela janela){ 	// Construtor
+		this.mt = mt; 
 		this.janela = janela;
 		expRegCodigo = "\\d{7}"; 					// Exprssão regular de autenticação do código
 		defineComponentes(); 
 		organizaComponentes();	
-		setBorder(BorderFactory.createEtchedBorder()); // Define uma borda no painel
 	}
 
 	private void defineComponentes() { 				// Método que define (cria) os componentes visuais
@@ -52,7 +51,7 @@ public class PainelLogin extends JPanel implements ActionListener{
 		codigo.addKeyListener(new Validador());
 		botaoEntrar = new JButton("Entrar");
 		botaoEntrar.setEnabled(false);
-		botaoEntrar.addActionListener(this);	
+		botaoEntrar.addActionListener(this);
 	}
 
 	private void organizaComponentes() { 			// Método que organiza os componentes na tela		
@@ -90,7 +89,7 @@ public class PainelLogin extends JPanel implements ActionListener{
 			ParallelGroup pg = layout.createParallelGroup(Alignment.CENTER);
 			pg.addComponent(labelImagem);
 			SequentialGroup sg2 = layout.createSequentialGroup();
-			sg2.addComponent(botaoAutenticar);
+			sg2.addComponent(botaoAutenticar);					// adiciona o botão Autenticar
 			ParallelGroup pg2 = layout.createParallelGroup(Alignment.BASELINE);
 			pg2.addComponent(codigo);
 			pg2.addComponent(botaoEntrar);
@@ -101,20 +100,27 @@ public class PainelLogin extends JPanel implements ActionListener{
 		}
 	}
 
-	@Override // significa que este método está sendo sobreescrito de uma interface
+	@Override 
 	public void actionPerformed(ActionEvent e) { // método da interface ActionListener, responsável por tratar os eventos gerados pelos botões e munus
 		if(e.getActionCommand() == "Autenticar"){
 			try {
-				autenticacao.instanciaObjetoTwitter(); // se o botão Autenticar for clicado, chama o método autentica da classe Autenticação
+				mt.instanciaTwitter(); // se o botão Autenticar for clicado, chama o método autentica da classe Autenticação
 			} catch (TwitterException te) {
-					JOptionPane.showMessageDialog(this, "Não foi possível estabelecer a conexão com o " +
-							"servidor!\n Por favor, verifique sua conexão com a internet e\n tente novamente " +
-							"mais tarde. ", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Não foi possível estabelecer a conexão com o " +
+						"servidor,\n ou o serviço do Twitter está indiponível!\n Por favor, verifique sua conexão com a internet e\n tente novamente " +
+						"mais tarde. ", "Erro", JOptionPane.ERROR_MESSAGE);
+			} catch (IOException ioe) {
+				JOptionPane.showMessageDialog(this, "Ocorreu um problema na tentativa de abrir o navegador de internet.\n" +
+						" Tente novamente e se o problema persistir, contate o administrador do sistema. ", "Erro", JOptionPane.ERROR_MESSAGE);
+				
+			} catch (URISyntaxException ure) {
+				JOptionPane.showMessageDialog(this, "Ocorreu um problema com a URL solicitada.\n Talvez a URL" +
+						" esteja incorreta.\n Por favor, tente novamente! ", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
-			if(autenticacao.getIntanciouObjetoTwitter()){
+			if(mt.getIntanciouTwitter()){
 				try {
-					twitter = autenticacao.autentica(codigo.getText());
+					twitter = mt.efetuaAutenticacao(codigo.getText());
 					janela.definePainelPrincipal(twitter);
 					janela.defineMenu();
 				} catch (TwitterException te) {
@@ -137,7 +143,7 @@ public class PainelLogin extends JPanel implements ActionListener{
 		}
 	}
 	/**
-	 * método que monitora o campo de texto e habilita ou desabilita o botão Entrar
+	 * Classe interna que monitora o campo de texto e habilita ou desabilita o botão Entrar
 	 */
 	class Validador extends KeyAdapter {
 		@Override
@@ -148,25 +154,4 @@ public class PainelLogin extends JPanel implements ActionListener{
 				botaoEntrar.setEnabled(false);
 		}
 	}
-	
-	/**
-	 * Método que trata os eventos do menu, vindos da classe Janela. 
-	 */
-	
-	public void trataOpcoesMenu(ActionEvent e){
-		Opcao opcao = Opcao.valueOf(e.getActionCommand());		
-		if(opcao == Opcao.SAIR){
-			System.exit(0);
-		}else
-		if(opcao == Opcao.SOBRE){
-				JOptionPane.showMessageDialog(this, "Blue Bird\n Software desenvolvido como trabalho" +
-						" final da disciplina INE 5605\n Versão TF1", "Sobre", JOptionPane.INFORMATION_MESSAGE);
-		}else {
-			JOptionPane.showMessageDialog(this, "Para utilizar o programa, clique sobre o botão Autenticar.\n Você será " +
-					"redirecionado para uma página Web onde deverá\n informar seu usuário e senha do Twitter.\n Após efetuar o login " +
-					"será fornecido um código, que deverá\n ser digitado no campo correspondente nesta aplicação.\n Se o código" +
-					" estiver em formato válido, basta clicar no\n botão Entrar para utilizar o programa.",
-					"Utilização", JOptionPane.INFORMATION_MESSAGE);
-		}
-	}	
 }

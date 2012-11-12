@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.AbstractButton;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,7 +17,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.JTextArea;
-import Grupo3.BlueBird.igu.menu.Opcao;
+
+import Grupo3.BlueBird.logica.MeuTwitter;
 import Grupo3.BlueBird.logica.Timeline;
 import Grupo3.BlueBird.logica.UpdateStatus;
 import twitter4j.Twitter;
@@ -25,16 +28,21 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 	
 	Timeline timeline;
 	TimelineView timelineview;
+	Twitter twitter;
 	UpdateStatus atualizaStatus;
 	Container container, contAreaTexto, contAreaBotao;
 	JLabel nome;
 	JLabel info;	
 	JButton tweetar;
 	JTextArea campoTweet;
+	PainelTopo painelTopo;
+	PainelEsquerda painelEsquerda;
+	MeuTwitter meuTwitter;
 	
-	public PainelPrincipal(Twitter twitter) {
+	public PainelPrincipal(Twitter twitter, Janela janela) {
+		this.twitter = twitter;
 		timeline = new Timeline(twitter);
-		timeline.setCurrentTimelineView(new TimelineView(30,45));
+		timeline.setCurrentTimelineView(new TimelineView(8,30));
 		try {
 			timeline.refreshHomeTimeline();
 		} catch (TwitterException e) {
@@ -51,48 +59,59 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 		campoTweet.setLineWrap(true);
 		campoTweet.addKeyListener(new Validador());
 		contAreaTexto = new JPanel();
-		contAreaTexto.setPreferredSize(new Dimension(300, 300));
+		contAreaTexto.setPreferredSize(new Dimension(50, 0));
 		tweetar = new JButton("Tweetar");
 		tweetar.setEnabled(false);
 		tweetar.addActionListener(this);
 		container = timeline.getCurrentTimelineView().getContainer();
+		painelTopo = new PainelTopo(twitter, this);
+		painelEsquerda = new PainelEsquerda();
 	}
 
 	private void organizaComponentes() {		
 		GroupLayout layout = new GroupLayout(this); 
-		layout.setAutoCreateGaps(true); 
-		layout.setAutoCreateContainerGaps(true);
+		layout.setAutoCreateGaps(false); 
+		layout.setAutoCreateContainerGaps(false);
 		setLayout(layout);
 		
 		// Dimensão Horizontal
 		
-		{			
-			SequentialGroup sg = layout.createSequentialGroup(); 	
-			ParallelGroup pg = layout.createParallelGroup(Alignment.LEADING);	
-			pg.addComponent(campoTweet);
-			pg.addComponent(tweetar);
-			pg.addComponent(contAreaTexto);
-			sg.addGroup(pg);
+		{
+			ParallelGroup pg = layout.createParallelGroup(Alignment.LEADING);
+			pg.addComponent(painelTopo);	
+			SequentialGroup sg = layout.createSequentialGroup(); 
+			ParallelGroup pg2 = layout.createParallelGroup(Alignment.LEADING);	
+			pg2.addComponent(painelEsquerda);
+			//pg2.addComponent(tweetar);
+			//pg2.addComponent(contAreaTexto);
+			sg.addGroup(pg2);
 			sg.addComponent(container);
-			layout.setHorizontalGroup(sg);
+			pg.addGroup(sg);
+			layout.setHorizontalGroup(pg);
 		}
 		
 		// Dimensão Vertical
 				
 		{
-			//SequentialGroup sg = layout.createSequentialGroup();
+			SequentialGroup sg = layout.createSequentialGroup(); 
+			sg.addComponent(painelTopo);
 			ParallelGroup pg = layout.createParallelGroup(Alignment.TRAILING);
 			SequentialGroup sg2 = layout.createSequentialGroup();
-			sg2.addComponent(campoTweet);
-			sg2.addComponent(tweetar);
-			sg2.addComponent(contAreaTexto);
+			sg2.addComponent(painelEsquerda);
+			//sg2.addComponent(tweetar);
+			//sg2.addComponent(contAreaTexto);
 			pg.addGroup(sg2);
 			pg.addComponent(container);
-			//sg.addGroup(pg);
-			layout.setVerticalGroup(pg);
+			sg.addGroup(pg);
+			layout.setVerticalGroup(sg);
 		}
 		
 	}
+	
+//	public void mostraPainelResultadoBusca(String texto){
+//		container = new PainelResultadoBusca(twitter, texto);
+//		organizaComponentes();
+//	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -109,40 +128,6 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 					JOptionPane.showMessageDialog(this, "Ação não realizada!\n Verifique sua conexão com a internet.", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 			}		
-	}
-
-	/**
-	 * Método que trata os eventos do menu, vindos da classe Janela. 
-	 */
-	
-	public void trataOpcoesMenu(ActionEvent e) {
-		Opcao opcao = Opcao.valueOf(e.getActionCommand());		
-		if (opcao == Opcao.SAIR){
-			System.exit(0);
-		}else
-		if (opcao == Opcao.ATUALIZATIMELINE){
-			try {
-				timeline.refreshHomeTimeline();
-			} catch (TwitterException te) {
-				JOptionPane.showMessageDialog(this, "Ocorreu um erro durante a requisição da 'timeline'!\n" +
-						" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
-			}
-		}else
-		if (opcao == Opcao.AJATUALIZATIMTLINE){
-			JOptionPane.showMessageDialog(this, "Para atualizar a visualização da sua Timeline,\n no menu vá em 'Opções' e escolha a\n opção " +
-					"'Atualiza Timeline'", "Atualizando Timeline", JOptionPane.INFORMATION_MESSAGE);
-		}else
-		if (opcao == Opcao.TIMELINE){
-				JOptionPane.showMessageDialog(this, "Fica localizado no painel à direita e\n permite a visualização da sua 'linha do tempo'", "Timeline", JOptionPane.INFORMATION_MESSAGE);
-		}else 
-		if (opcao == Opcao.TWEETAR){
-			JOptionPane.showMessageDialog(this, "No campo localizado à esquerda, é possível digitar\n o seu novo status, com limite de 140 " +
-					"caracteres.\n Digite o que quiser e clique em 'Tweetar'",
-					"Tweetar", JOptionPane.INFORMATION_MESSAGE);
-		}else {
-			JOptionPane.showMessageDialog(this, "Blue Bird\n Software desenvolvido como trabalho" +
-					" final da disciplina INE 5605\n Versão 1.0 - 25/10/2012", "Sobre", JOptionPane.INFORMATION_MESSAGE);
-		}
 	}
 	
 	class Validador extends KeyAdapter {
