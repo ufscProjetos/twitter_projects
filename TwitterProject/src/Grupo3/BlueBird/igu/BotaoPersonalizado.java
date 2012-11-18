@@ -1,7 +1,6 @@
 package Grupo3.BlueBird.igu;
 
 import java.awt.Dimension;
-
 import javax.swing.Icon;
 import javax.swing.JButton;
 

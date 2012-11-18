@@ -33,12 +33,12 @@ public class BarraMenu extends JMenuBar {
 		add(menu); // adiciona o menu à barra
 
 		menu = new JMenu("Ajuda");
-		item = new JMenuItem("Timeline");
-		item.setActionCommand(Opcao.TIMELINE.name());
+		item = new JMenuItem("Ver minha Timeline");
+		item.setActionCommand(Opcao.VERTIMELINE.name());
 		item.addActionListener(janela);
 		menu.add(item);
 		
-		item = new JMenuItem("Tweetar");
+		item = new JMenuItem("Postar um Tweet");
 		item.setActionCommand(Opcao.TWEETAR.name());
 		item.addActionListener(janela);
 		menu.add(item);
@@ -47,6 +47,21 @@ public class BarraMenu extends JMenuBar {
 		item.setActionCommand(Opcao.AJATUALIZATIMTLINE.name());
 		item.addActionListener(janela);
 		menu.add(item);	
+		
+		item = new JMenuItem("Pesquisar");
+		item.setActionCommand(Opcao.PESQUISAR.name());
+		item.addActionListener(janela);
+		menu.add(item);
+		
+		item = new JMenuItem("Quantos me seguem");
+		item.setActionCommand(Opcao.QUANTOSMESEGUEM.name());
+		item.addActionListener(janela);
+		menu.add(item);
+		
+		item = new JMenuItem("Quantos eu sigo");
+		item.setActionCommand(Opcao.QUANTOSSIGO.name());
+		item.addActionListener(janela);
+		menu.add(item);
 		
 		menu.add(new JSeparator());
 		

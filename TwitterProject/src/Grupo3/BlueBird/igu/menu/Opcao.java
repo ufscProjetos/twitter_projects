@@ -7,8 +7,11 @@ package Grupo3.BlueBird.igu.menu;
 public enum Opcao {
 		SAIR, 
 		ATUALIZATIMELINE,
-		TIMELINE,
+		VERTIMELINE,
 		TWEETAR,
 		AJATUALIZATIMTLINE,
+		PESQUISAR,
+		QUANTOSSIGO,
+		QUANTOSMESEGUEM,
 		SOBRE
 }

@@ -30,12 +30,4 @@ public class Pesquisador {
 		return tweet;
 	}
 	
-	public void buscaUsuario(String usuario) throws TwitterException {
-		usuarios = twitter.searchUsers(usuario, 0);
-	}
-	
-	public ResponseList<User> getUsuarioPesquisado(){
-		return usuarios;
-	}
-
 }
