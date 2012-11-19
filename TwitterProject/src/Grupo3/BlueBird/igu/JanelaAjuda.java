@@ -5,10 +5,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class JanelaAjuda extends JDialog {
@@ -37,13 +40,16 @@ public class JanelaAjuda extends JDialog {
 
 	private void definePainelEsquerda(){
 		painelEsquerda = new JPanel();
+		painelEsquerda.setLayout(new BoxLayout(painelEsquerda, BoxLayout.PAGE_AXIS));
 		painelEsquerda.setMinimumSize(new Dimension(60, 250));
 		painelEsquerda.setMaximumSize(new Dimension(60, 250));
 		painelEsquerda.setPreferredSize(new Dimension(60, 250));
-		painelEsquerda.setBackground(new Color(0, 195, 248));		
+		painelEsquerda.setBackground(new Color(0, 195, 248));
+		painelEsquerda.add(new JLabel(new ImageIcon(getClass().getResource("/imagens/twitter-bird2.png")), SwingConstants.CENTER));
+		painelEsquerda.setBorder(new EmptyBorder(0, 12, 0, 0));
 	}
-	
-	private void definePainelDireita(){		
+				
+		private void definePainelDireita(){		
 		painelDireita = new JPanel();
 		painelDireita.setLayout(new BoxLayout(painelDireita, BoxLayout.PAGE_AXIS));
 		painelDireita.setMinimumSize(new Dimension(440, 250));

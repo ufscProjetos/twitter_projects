@@ -123,7 +123,6 @@ public class PainelLogin extends JPanel implements ActionListener{
 					twitter = mt.efetuaAutenticacao(codigo.getText());
 					janela.definePainelPrincipal(twitter);
 					janela.defineMenu();
-					janela.setResizable(false);
 				} catch (TwitterException te) {
 					if (te.getStatusCode() != 403) {
 						JOptionPane.showMessageDialog(this, "Não foi possível validar o código " +

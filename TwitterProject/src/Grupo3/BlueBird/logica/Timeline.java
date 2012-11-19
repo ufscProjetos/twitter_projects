@@ -18,15 +18,9 @@ public class Timeline {
 			_twitter = twitter;
 		}
 
-		public Boolean refreshHomeTimeline(){
-	        try {
+		public void refreshHomeTimeline() throws TwitterException{
 	            _statuses = _twitter.getHomeTimeline();
 	            _currentTimelineView.printStatus(_statuses);
-	            return true;
-	        } catch (TwitterException te) {
-	            te.printStackTrace();
-	            return false;
-	        }
 	    }
 
 		public List<Status> getTimeline(){

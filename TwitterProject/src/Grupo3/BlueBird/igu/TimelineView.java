@@ -3,7 +3,6 @@ package Grupo3.BlueBird.igu;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.util.List;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
