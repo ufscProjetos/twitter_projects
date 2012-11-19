@@ -19,14 +19,13 @@ import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import Grupo3.BlueBird.logica.MeuTwitter;
-import Grupo3.BlueBird.logica.Timeline;
+import Grupo3.BlueBird.logica.timeline.Timeline;
 import Grupo3.BlueBird.logica.UpdateStatus;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
 public class PainelPrincipal extends JPanel implements ActionListener{
 	
-	Timeline timeline;
 	TimelineView timelineview;
 	Twitter twitter;
 	UpdateStatus atualizaStatus;
@@ -42,10 +41,14 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 	public PainelPrincipal(Twitter twitter, Janela janela, MeuTwitter meuTwitter) {
 		this.mt = meuTwitter;
 		this.twitter = twitter;
-		timeline = new Timeline(twitter);
-		timeline.setCurrentTimelineView(new TimelineView(8,30));
 		try {
-			timeline.refreshHomeTimeline();
+			timelineview = new TimelineView(new Timeline(twitter));
+		} catch (TwitterException e1) {
+			JOptionPane.showMessageDialog(this, "Ocorreu na criação da 'timeline'!\n" +
+					" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		try {
+			timelineview.updateTimeline();
 		} catch (TwitterException e) {
 			JOptionPane.showMessageDialog(this, "Ocorreu um erro durante a requisição da 'timeline'!\n" +
 					" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -72,8 +75,7 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 		painelBotao.setMaximumSize(new Dimension(440, 32));
 		painelBotao.setBorder(new EmptyBorder(5, 0, 0 ,10));
 		painelBotao.add(tweetar);
-		container = timeline.getCurrentTimelineView().getContainer();
-		
+		container = timelineview.getContainer();	
 	}
 
 	private void organizaComponentes() {		
