@@ -3,7 +3,10 @@ package Grupo3.BlueBird.igu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import Grupo3.BlueBird.igu.menu.BarraMenu;
 import Grupo3.BlueBird.igu.menu.Opcao;
 import Grupo3.BlueBird.logica.MeuTwitter;
@@ -39,6 +42,14 @@ public class Janela extends JFrame implements ActionListener {
 		JanelaAjuda pa;
 		
 		switch (opcao) {
+		case REFRESHTIMELINE:
+			try {
+				painelPrincipal.executaRefreshTimeline();
+			} catch (TwitterException e) {
+				JOptionPane.showMessageDialog(this, "Ocorreu um erro durante a requisição da 'timeline'!\n" +
+						" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+			break;
 		case VERTIMELINE:
 			pa = new JanelaAjuda("Como ver minha timeline?", mt.getComoVisualizarTimeline());
 			break;
@@ -53,6 +64,9 @@ public class Janela extends JFrame implements ActionListener {
 			break;
 		case QUANTOSSIGO:
 			pa = new JanelaAjuda("Como saber quantos eu sigo?", mt.getQuantosEuSigo());
+			break;
+		case AJREFRESHTIMELINE:
+			pa = new JanelaAjuda("Como fazer o \"refresh\" da timeline", mt.getFazerRefreshTimeline());
 			break;
 		case SOBRE:
 			pa = new JanelaAjuda("Sobre o Blue Bird", mt.getSobreMim());

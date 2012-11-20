@@ -17,10 +17,10 @@ public class BarraMenu extends JMenuBar {
 	
 	public BarraMenu(Janela janela) {
 		menu = new JMenu("Opções"); // define a primeira opção do menu
-
-		item = new JMenuItem("Atualiza Timeline");
-		item.setActionCommand(Opcao.ATUALIZATIMELINE.name());
-		item.addActionListener(janela); 
+		
+		item = new JMenuItem("Refresh Timeline");
+		item.setActionCommand(Opcao.REFRESHTIMELINE.name());
+		item.addActionListener(janela);
 		menu.add(item);
 
 		menu.add(new JSeparator());
@@ -42,12 +42,7 @@ public class BarraMenu extends JMenuBar {
 		item.setActionCommand(Opcao.TWEETAR.name());
 		item.addActionListener(janela);
 		menu.add(item);
-		
-		item = new JMenuItem("Atualizando Timeline");
-		item.setActionCommand(Opcao.AJATUALIZATIMTLINE.name());
-		item.addActionListener(janela);
-		menu.add(item);	
-		
+				
 		item = new JMenuItem("Pesquisar");
 		item.setActionCommand(Opcao.PESQUISAR.name());
 		item.addActionListener(janela);
@@ -60,6 +55,11 @@ public class BarraMenu extends JMenuBar {
 		
 		item = new JMenuItem("Quantos eu sigo");
 		item.setActionCommand(Opcao.QUANTOSSIGO.name());
+		item.addActionListener(janela);
+		menu.add(item);
+		
+		item = new JMenuItem("Atualizar a visualização da timeline");
+		item.setActionCommand(Opcao.AJREFRESHTIMELINE.name());
 		item.addActionListener(janela);
 		menu.add(item);
 		

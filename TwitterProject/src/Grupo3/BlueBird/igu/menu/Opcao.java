@@ -5,11 +5,11 @@ package Grupo3.BlueBird.igu.menu;
  * na classe barramenulogin 
  */
 public enum Opcao {
+		REFRESHTIMELINE,
 		SAIR, 
-		ATUALIZATIMELINE,
 		VERTIMELINE,
+		AJREFRESHTIMELINE,
 		TWEETAR,
-		AJATUALIZATIMTLINE,
 		PESQUISAR,
 		QUANTOSSIGO,
 		QUANTOSMESEGUEM,

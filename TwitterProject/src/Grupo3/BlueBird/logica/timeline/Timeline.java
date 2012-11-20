@@ -27,7 +27,7 @@ public class Timeline {
 	public JList<Object> refreshHomeTimeline() throws TwitterException {
 		_collection.updateCollection(_twitter.getHomeTimeline());
 		_listModel.setCollection(_collection);
-		_timelineList = new JList<>(_listModel); //.setModel(_listModel); //
+		_timelineList = new JList<>(_listModel); 
 		_timelineList.setCellRenderer(new TimelineRenderer());
 		_timelineList.setVisibleRowCount(6);
 		_timelineList.addListSelectionListener(new TimelineListSelection(
@@ -53,7 +53,6 @@ public class Timeline {
 			 if (!event.getValueIsAdjusting()){ 
 				 TimelineTweet tweet = (TimelineTweet) _list.getSelectedValue();
 				 _currentId = tweet.getStatus().getId();
-				 //System.out.println(tweet.getStatus().getId());
 			 }
 		}
 

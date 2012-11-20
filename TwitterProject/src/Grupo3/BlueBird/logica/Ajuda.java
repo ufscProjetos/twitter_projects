@@ -40,4 +40,11 @@ public class Ajuda {
 				"ine5605.grupo3@gmail.com ";
 	}
 
+	public String getFazerRefreshTimeline() {
+		return "Para que você possa visualizar os últimos Tweets dos seus\n amigos, ou mesmo o que você acabou de postar, é preciso que " +
+				"\nvocê atualize a visualização da sua Timeline.\n Fazer isso é muito simples: no menu, escolha opções e depois\n \"Refresh Timeline\". " +
+				"Feito isso, os tweets mais recentes serão\n exibidos na sua linha do tempo.";
+	}
+
+
 }

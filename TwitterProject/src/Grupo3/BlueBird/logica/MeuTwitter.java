@@ -80,4 +80,8 @@ public class MeuTwitter {
 		return ajuda.getSobreMim();
 	}
 
+	public String getFazerRefreshTimeline() {
+		return ajuda.getFazerRefreshTimeline();
+	}
+
 }

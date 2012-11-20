@@ -36,7 +36,7 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 	PainelEsquerda painelEsquerda;
 	JPanel painelBotao;
 	MeuTwitter mt;
-	Icon imgBotao;
+	Icon img;
 	
 	public PainelPrincipal(Twitter twitter, Janela janela, MeuTwitter meuTwitter) {
 		this.mt = meuTwitter;
@@ -48,7 +48,7 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 					" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 		try {
-			timelineview.updateTimeline();
+			executaRefreshTimeline();
 		} catch (TwitterException e) {
 			JOptionPane.showMessageDialog(this, "Ocorreu um erro durante a requisição da 'timeline'!\n" +
 					" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -57,16 +57,21 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 		defineComponentes();
 		organizaComponentes();
 	}
+
+
+	public void executaRefreshTimeline() throws TwitterException {
+		timelineview.updateTimeline();		
+	}
 	
 	private void defineComponentes() {
-		campoTweet = new AreaTextoPersonalizada(440, 60);
+		campoTweet = new AreaTextoPersonalizada(470, 60);
 		campoTweet.setBorder(new EmptyBorder(5, 5, 5, 5));
 		campoTweet.setLineWrap(true);
 		campoTweet.addKeyListener(new Validador());
-		imgBotao = new ImageIcon(getClass().getResource("/imagens/tweet.png"));
-		tweetar = new BotaoPersonalizado(null, imgBotao, 60, 22);
+		img = new ImageIcon(getClass().getResource("/imagens/tweet.png"));
+		tweetar = new BotaoPersonalizado(null, img, 60, 22);
 		tweetar.setEnabled(false);
-		tweetar.addActionListener(this);		
+		tweetar.addActionListener(this);	
 		painelTopo = new PainelTopo(twitter, mt);
 		painelEsquerda = new PainelEsquerda(mt);
 		painelBotao = new JPanel();

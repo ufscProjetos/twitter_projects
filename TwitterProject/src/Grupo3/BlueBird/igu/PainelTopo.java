@@ -36,15 +36,15 @@ public class PainelTopo extends JPanel implements ActionListener{
 
 	private void defineComponentes(){
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		this.setMinimumSize(new Dimension(500, 40));
-		this.setMaximumSize(new Dimension(500, 40));
+		this.setMinimumSize(new Dimension(530, 40));
+		this.setMaximumSize(new Dimension(530, 40));
 		busca = new CampoTextoPersonalizado(100, 20);
 		botaoBusca = new BotaoPersonalizado(null, new ImageIcon(getClass().getResource("/imagens/icone_lupa.png")), 20, 20);
 		botaoBusca.addActionListener(this);
 		imagem = new JLabel(new ImageIcon(getClass().getResource("/imagens/twitter-bird2.png")));
 		painelIcone = new JPanel();
 		painelIcone.setLayout(new FlowLayout(FlowLayout.LEFT));
-		painelIcone.setPreferredSize(new Dimension(370, 40));
+		painelIcone.setPreferredSize(new Dimension(400, 40));
 		painelIcone.setBackground(new Color(49, 49, 49));
 		painelBusca = new JPanel();
 		painelBusca.setLayout(new FlowLayout(FlowLayout.RIGHT));
