@@ -5,6 +5,7 @@ import javax.swing.*;
 import Grupo3.BlueBird.logica.timeline.TimelineTweet;
 
 import java.awt.*;
+import java.net.URL;
 import java.util.*;
 
 public class TimelineRenderer extends DefaultListCellRenderer {
@@ -18,7 +19,12 @@ public class TimelineRenderer extends DefaultListCellRenderer {
 			TimelineTweet status = (TimelineTweet) value;
 			ImageIcon icon = (ImageIcon) _iconTable.get(value);
 			if (icon == null) {
-				icon = status.getIcon();
+				URL url = status.getIconURL();
+				try{
+					icon = new ImageIcon(url);
+				}catch (Exception e) {
+					icon = new ImageIcon(getClass().getResource("/imagens/img_padrao.png"));
+				}
 				_iconTable.put(value, icon);
 			}
 			label.setIcon(icon);
