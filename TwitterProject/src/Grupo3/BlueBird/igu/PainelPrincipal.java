@@ -1,5 +1,7 @@
 package Grupo3.BlueBird.igu;
 
+import grupo3.blueBird.igu.timeline.TimelineView;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
