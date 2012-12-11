@@ -9,6 +9,8 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import Grupo3.BlueBird.igu.menu.BarraMenu;
 import Grupo3.BlueBird.igu.menu.Opcao;
+import Grupo3.BlueBird.igu.paineis.PainelLogin;
+import Grupo3.BlueBird.igu.paineis.PainelPrincipal;
 import Grupo3.BlueBird.logica.MeuTwitter;
 
 public class Janela extends JFrame implements ActionListener {
@@ -84,14 +86,14 @@ public class Janela extends JFrame implements ActionListener {
 		}
 	}
 	
-	protected void definePainelPrincipal(Twitter twitter){
+	public void definePainelPrincipal(Twitter twitter){
 		painelPrincipal = new PainelPrincipal(twitter, this, mt);
 		setContentPane(painelPrincipal);
 		pack();
 		setLocationRelativeTo(null);
 	}
 	
-	protected void defineMenu(){
+	public void defineMenu(){
 		br = new BarraMenu(this); 
 		setJMenuBar(br); 
 	}
