@@ -1,17 +1,24 @@
 package Grupo3.BlueBird.igu.paineis;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import twitter4j.Tweet;
 import twitter4j.TwitterException;
+import Grupo3.BlueBird.igu.BotaoPersonalizado;
 import Grupo3.BlueBird.logica.MeuTwitter;
 
 public class PainelResultadoBusca extends JPanel {
@@ -33,15 +40,12 @@ public class PainelResultadoBusca extends JPanel {
 	}
 	
 	private void defineExibicaoResultado(){
-		try {
+		try {			
+			mt.executaPesquisaTexto(texto);
+			tweet = mt.getResultPesquisaTexto();
 			
-			mt.executaPesquisa(texto);
-			tweet = mt.getResultPesquisa();
-			
-			for (Tweet tweet_retornado : tweet) {
-				JPanel painelTweet = new JPanel();
-				painelTweet.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(0, 195, 248)));
-				painelTweet.setBackground(Color.WHITE);
+			for (final Tweet tweet_retornado : tweet) {
+				JPanel painelIndividual = definePainelIndividual();
 				JLabel imagem;
 				try {
 					imagem = new JLabel(new ImageIcon(new URL(tweet_retornado.getProfileImageUrl())));
@@ -50,15 +54,42 @@ public class PainelResultadoBusca extends JPanel {
 							"Uma imagem padrão será exibida.", "Falha no carregamento das imagens", JOptionPane.INFORMATION_MESSAGE);
 					imagem = new JLabel(new ImageIcon(getClass().getResource("/imagens/img_padrao.png")));
 				}
-				painelTweet.add(imagem);
-				painelTweet.add(new JLabel("<html>@" + tweet_retornado.getFromUserName() + "<p style=\"width:300px; font-size:8px;\">"
-						+ tweet_retornado.getText() + "</p>"));
-				this.add(painelTweet);
+				painelIndividual.add(imagem);
+				JPanel painelInfo = new JPanel();
+				painelInfo.setLayout(new BoxLayout(painelInfo, BoxLayout.Y_AXIS));
+				painelInfo.setBackground(Color.WHITE);
+				painelInfo.add(new JLabel("<html>@" + tweet_retornado.getFromUserName() + "<p style=\"width:300px; font-size:8px;\">"
+								+ tweet_retornado.getText() + "</p>"));
+				JButton btSeguir = new BotaoPersonalizado("Seguir", 14, 13);				
+				btSeguir.addActionListener(new ActionListener() {					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							mt.seguir(tweet_retornado.getFromUserId());
+							JOptionPane.showMessageDialog(null, "Você está seguindo " + tweet_retornado.getFromUserName() +
+									" !" , "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+						} catch (TwitterException e1) {
+							JOptionPane.showMessageDialog(null, "Não foi possível seguir " + tweet_retornado.getFromUserName() +
+									" !", "Erro", JOptionPane.ERROR_MESSAGE);			
+						}							
+					}
+				});
+				painelInfo.add(btSeguir);
+				painelIndividual.add(painelInfo);
+				this.add(painelIndividual);
 			}
 			
 		} catch (TwitterException e) {
 			JOptionPane.showMessageDialog(this, "Ocorreu um problema na sua busca.\n" +
 					" Tente novamente mais tarde!", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+	private JPanel definePainelIndividual() {
+		JPanel painelIndividual = new JPanel();
+		painelIndividual.setLayout(new FlowLayout(FlowLayout.LEFT));
+		painelIndividual.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(0, 195, 248)));
+		painelIndividual.setBackground(Color.WHITE);
+		return painelIndividual;
 	}
 }

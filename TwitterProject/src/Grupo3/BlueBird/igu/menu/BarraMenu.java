@@ -33,6 +33,18 @@ public class BarraMenu extends JMenuBar {
 		add(menu); // adiciona o menu à barra
 
 		menu = new JMenu("Ajuda");
+		
+		item = new JMenuItem("Funcionalidades TF1");
+		item.setEnabled(false);
+		menu.add(item);
+
+		menu.add(new JSeparator());
+		
+		item = new JMenuItem("Atualizar a visualização da timeline");
+		item.setActionCommand(Opcao.AJREFRESHTIMELINE.name());
+		item.addActionListener(janela);
+		menu.add(item);
+		
 		item = new JMenuItem("Ver minha Timeline");
 		item.setActionCommand(Opcao.VERTIMELINE.name());
 		item.addActionListener(janela);
@@ -42,6 +54,14 @@ public class BarraMenu extends JMenuBar {
 		item.setActionCommand(Opcao.TWEETAR.name());
 		item.addActionListener(janela);
 		menu.add(item);
+		
+		menu.add(new JSeparator());
+		
+		item = new JMenuItem("Funcionalidades TF2");
+		item.setEnabled(false);
+		menu.add(item);
+		
+		menu.add(new JSeparator());
 				
 		item = new JMenuItem("Pesquisar");
 		item.setActionCommand(Opcao.PESQUISAR.name());
@@ -58,11 +78,12 @@ public class BarraMenu extends JMenuBar {
 		item.addActionListener(janela);
 		menu.add(item);
 		
-		item = new JMenuItem("Atualizar a visualização da timeline");
-		item.setActionCommand(Opcao.AJREFRESHTIMELINE.name());
-		item.addActionListener(janela);
-		menu.add(item);
+		menu.add(new JSeparator());
 		
+		item = new JMenuItem("Funcionalidades TF3");
+		item.setEnabled(false);
+		menu.add(item);
+
 		menu.add(new JSeparator());
 		
 		item = new JMenuItem("Sobre");

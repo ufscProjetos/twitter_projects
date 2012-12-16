@@ -2,8 +2,6 @@ package Grupo3.BlueBird.logica.timeline;
 
 import java.net.URL;
 
-import javax.swing.ImageIcon;
-
 import twitter4j.Status;
 
 public class TimelineTweet {
@@ -28,15 +26,8 @@ public class TimelineTweet {
 		return _status.getText();
 	}
 	
-	public ImageIcon getIcon(){
-		URL url = _status.getUser().getProfileImageURL();
-		ImageIcon icon;
-		try{
-			icon = new ImageIcon(url);
-		}catch (Exception e) {
-			icon = new ImageIcon(getClass().getResource("/imagens/img_padrao.png"));
-		}
-		return icon;
+	public URL getIconURL(){
+		return _status.getUser().getProfileImageURL();
 	}
 	
 	public String toString() {

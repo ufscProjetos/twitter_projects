@@ -36,7 +36,7 @@ public class Ajuda {
 	public String getSobreMim(){
 		return "O Blue Bird é um software que permite ao usuário utilizar os\n serviços do Twitter sem a necessidade de intermédio de\n " +
 				"navegadores de internet.\n\n" +
-				"Versão 2.0 - 20/11/2012\n\n" +
+				"Versão TF3 - 17/12/2012\n\n" +
 				"ine5605.grupo3@gmail.com ";
 	}
 

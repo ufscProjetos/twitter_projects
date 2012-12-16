@@ -1,5 +1,6 @@
 package Grupo3.BlueBird.igu.paineis;
 
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -22,7 +23,7 @@ import javax.swing.border.EmptyBorder;
 import Grupo3.BlueBird.igu.AreaTextoPersonalizada;
 import Grupo3.BlueBird.igu.BotaoPersonalizado;
 import Grupo3.BlueBird.igu.Janela;
-import Grupo3.BlueBird.igu.TimelineView;
+import Grupo3.BlueBird.igu.timeline.TimelineView;
 import Grupo3.BlueBird.logica.MeuTwitter;
 import Grupo3.BlueBird.logica.timeline.Timeline;
 import Grupo3.BlueBird.logica.UpdateStatus;
@@ -87,7 +88,7 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 		painelBotao.add(tweetar);
 		container = timelineview.getContainer();	
 	}
-
+	
 	private void organizaComponentes() {		
 		GroupLayout layout = new GroupLayout(this); 
 		layout.setAutoCreateGaps(false); 

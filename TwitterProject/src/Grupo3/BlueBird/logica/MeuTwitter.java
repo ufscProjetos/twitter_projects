@@ -2,11 +2,13 @@ package Grupo3.BlueBird.logica;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.List;
 import twitter4j.IDs;
 import twitter4j.Tweet;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.User;
 
 public class MeuTwitter {
 	
@@ -33,26 +35,37 @@ public class MeuTwitter {
 		return twitter;
 	}
 	
-	public int getNumeroSeguidores() throws TwitterException{
-		int cont = 0;
-		IDs ids = twitter.getFollowersIDs(-1);
-		cont = ids.getIDs().length;	
-		return cont;
+	public IDs getNumeroSeguidores() throws TwitterException{
+		return twitter.getFollowersIDs(-1);
+	}
+	
+	private long[] obtemNumeroAmigos() throws TwitterException {
+		return twitter.getFriendsIDs(-1).getIDs();
 	}
 	
 	public int getNumeroAmigos() throws TwitterException{
-		int cont = 0;
-		IDs ids = twitter.getFriendsIDs(-1);
-		cont = ids.getIDs().length;	
-		return cont;
+		return obtemNumeroAmigos().length;
 	}
-	
-	public void executaPesquisa(String texto) throws TwitterException{
+		
+	public void executaPesquisaTexto(String texto) throws TwitterException{
 		pesquisador = new Pesquisador(twitter);
-		pesquisador.pesquisaTweet(texto);
+		pesquisador.pesquisaTweetTexto(texto);
 	}
 	
-	public List<Tweet> getResultPesquisa(){
+	public List<User> mostraUsuario() throws TwitterException {
+		List<User> user = new LinkedList<>();
+		for (long id : obtemNumeroAmigos()) {
+			pesquisador = new Pesquisador(twitter);
+			user.add(twitter.showUser(id));
+		}		
+		return user;
+	}
+	
+	public void excluiAmigo(long id) throws TwitterException {
+		twitter.destroyFriendship(id);
+	}
+	
+	public List<Tweet> getResultPesquisaTexto(){
 		return pesquisador.getTweetPesquisado();
 	}
 	
@@ -82,6 +95,10 @@ public class MeuTwitter {
 
 	public String getFazerRefreshTimeline() {
 		return ajuda.getFazerRefreshTimeline();
+	}
+	
+	public void seguir(Long id) throws TwitterException {
+		 twitter.createFriendship(id);
 	}
 
 }

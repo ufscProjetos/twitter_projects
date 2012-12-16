@@ -15,12 +15,13 @@ public class Pesquisador {
 	QueryResult result;
 	ResponseList<User> usuarios;
 	List<Tweet> tweet;
+	User user;
 	
-	public Pesquisador(Twitter twitter){
+	public Pesquisador(Twitter twitter) throws TwitterException{
 		this.twitter = twitter;
 	}
 
-	public void pesquisaTweet(String texto) throws TwitterException {
+	public void pesquisaTweetTexto(String texto) throws TwitterException {
 		Query query = new Query(texto);
 	    result = twitter.search(query);
 	    tweet = result.getTweets();
@@ -29,5 +30,7 @@ public class Pesquisador {
 	public List<Tweet> getTweetPesquisado(){
 		return tweet;
 	}
+	
+	
 	
 }

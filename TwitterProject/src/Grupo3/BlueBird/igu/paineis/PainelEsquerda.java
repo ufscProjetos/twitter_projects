@@ -7,9 +7,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 import twitter4j.TwitterException;
 
+import Grupo3.BlueBird.igu.LabelPersonalizado;
 import Grupo3.BlueBird.logica.MeuTwitter;
 
 public class PainelEsquerda extends JPanel {
@@ -36,7 +36,7 @@ public class PainelEsquerda extends JPanel {
 	private void defineOpcaoSeguidores(){
 		int seguidores;
 		try {
-			seguidores = mt.getNumeroSeguidores();			
+			seguidores = mt.getNumeroSeguidores().getIDs().length;			
 		} catch (TwitterException e) {
 			JOptionPane.showMessageDialog(this, "Não foi possível obter o\n número de seguidores.",
 					"Número de seguidores indisponível", JOptionPane.INFORMATION_MESSAGE);
@@ -58,12 +58,11 @@ public class PainelEsquerda extends JPanel {
 					"Número de amigos indisponível", JOptionPane.INFORMATION_MESSAGE);
 			amigos = 0;
 		}
-		this.amigos = new JLabel("<html>" + String.valueOf(amigos) + 
-				"<p style=\"font-size:6px;\">Following</p></html>", SwingConstants.CENTER);
+		this.amigos = new LabelPersonalizado("<html>" + String.valueOf(amigos) + 
+				"<p style=\"font-size:6px;\">Following</p></html>", SwingConstants.CENTER, mt);
 		this.amigos.setForeground(Color.WHITE);
 		this.amigos.setMinimumSize(new Dimension(60, 60));
 		this.amigos.setMaximumSize(new Dimension(60, 60));
-		
 	}
 
 	private void organizaComponentes() {	

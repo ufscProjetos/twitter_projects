@@ -1,6 +1,8 @@
-package Grupo3.BlueBird.logica.timeline;
+package Grupo3.BlueBird.igu.timeline;
 import javax.swing.ListModel;
 import javax.swing.event.*;
+
+import Grupo3.BlueBird.logica.timeline.TweetedCollection;
 
 public class TimelineListModel implements ListModel<Object> {
   private TweetedCollection _collection;
