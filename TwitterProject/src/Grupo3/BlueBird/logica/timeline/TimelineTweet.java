@@ -1,6 +1,7 @@
 package Grupo3.BlueBird.logica.timeline;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 
 import twitter4j.Status;
 
@@ -30,7 +31,11 @@ public class TimelineTweet {
 		return _status.getUser().getProfileImageURL();
 	}
 	
+	public String getTime(){
+		return (new SimpleDateFormat("HH:mm:ss - dd/MM/yyyy")).format(_status.getCreatedAt());  
+	}
+	
 	public String toString() {
-	    return("<html>"+getUserName() + " - " + "@" +  getUserScreenName() + "<br>" + "<p style=\"width:300px; font-size:8px;\">" + getText()+ "</p>"+"</html>");
-	  }
+	    return("<html>"+getUserName() + " - " + "@" +  getUserScreenName() + "  " + getTime() + "<br>" +"<p style=\"width:300px; font-size:8px;\">" + getText()+ "</p>"+"</html>");
+	 }
 }

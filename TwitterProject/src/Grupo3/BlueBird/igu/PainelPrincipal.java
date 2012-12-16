@@ -9,6 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.GroupLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -20,8 +24,10 @@ import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+
 import Grupo3.BlueBird.logica.MeuTwitter;
 import Grupo3.BlueBird.logica.timeline.Timeline;
+import Grupo3.BlueBird.logica.timeline.UnknownUserTwitterException;
 import Grupo3.BlueBird.logica.UpdateStatus;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -39,19 +45,25 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 	JPanel painelBotao;
 	MeuTwitter mt;
 	Icon img;
+	private static ScheduledExecutorService _scheduler;
 	
 	public PainelPrincipal(Twitter twitter, Janela janela, MeuTwitter meuTwitter) {
 		this.mt = meuTwitter;
 		this.twitter = twitter;
+		
 		try {
 			timelineview = new TimelineView(new Timeline(twitter));
 		} catch (TwitterException e1) {
-			JOptionPane.showMessageDialog(this, "Ocorreu na criação da 'timeline'!\n" +
+			JOptionPane.showMessageDialog(this, "Ocorreu um erro na criação da 'timeline'!\n" +
 					" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 		try {
 			executaRefreshTimeline();
-		} catch (TwitterException e) {
+			automaticRefresh();
+		}	catch (UnknownUserTwitterException e) {
+			JOptionPane.showMessageDialog(this, "Nenhum Tweeter selecionado!\n Selecione um Tweeter, por favor!'!\n",
+					"Erro", JOptionPane.ERROR_MESSAGE);
+		}  catch (TwitterException e) {
 			JOptionPane.showMessageDialog(this, "Ocorreu um erro durante a requisição da 'timeline'!\n" +
 					" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -61,8 +73,31 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 	}
 
 
+	private void automaticRefresh() {
+		_scheduler = Executors.newScheduledThreadPool(1);
+		final PainelPrincipal _this = this;
+		_scheduler.scheduleAtFixedRate( 
+		      new Runnable() { 
+		        public void run()
+		        {
+		        	try {
+		        		executaRefreshTimeline();
+					}catch (UnknownUserTwitterException e) {
+						JOptionPane.showMessageDialog(_this, "Nenhum Tweeter selecionado!\n Selecione um Tweeter, por favor!'!\n",
+								"Erro", JOptionPane.ERROR_MESSAGE);
+					} catch (TwitterException e) {
+						JOptionPane.showMessageDialog(_this, "Ocorreu um erro durante a requisição da 'timeline'!\n",
+								"Erro", JOptionPane.ERROR_MESSAGE);
+					}
+		        	
+		        } 
+		      }, 0, 60, TimeUnit.SECONDS);
+	}
+
+
 	public void executaRefreshTimeline() throws TwitterException {
-		timelineview.updateTimeline();		
+		timelineview.updateTimeline();
+		this.repaint();	
 	}
 	
 	private void defineComponentes() {

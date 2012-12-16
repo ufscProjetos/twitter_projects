@@ -10,6 +10,7 @@ import twitter4j.TwitterException;
 import Grupo3.BlueBird.igu.menu.BarraMenu;
 import Grupo3.BlueBird.igu.menu.Opcao;
 import Grupo3.BlueBird.logica.MeuTwitter;
+import Grupo3.BlueBird.logica.timeline.UnknownUserTwitterException;
 
 public class Janela extends JFrame implements ActionListener {
 	
@@ -45,7 +46,10 @@ public class Janela extends JFrame implements ActionListener {
 		case REFRESHTIMELINE:
 			try {
 				painelPrincipal.executaRefreshTimeline();
-			} catch (TwitterException e) {
+			}catch (UnknownUserTwitterException e) {
+				JOptionPane.showMessageDialog(this, "Nenhum Tweeter selecionado!\n Selecione um Tweeter, por favor!'!\n",
+						"Erro", JOptionPane.ERROR_MESSAGE);
+			}catch (TwitterException e) {
 				JOptionPane.showMessageDialog(this, "Ocorreu um erro durante a requisição da 'timeline'!\n" +
 						" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
