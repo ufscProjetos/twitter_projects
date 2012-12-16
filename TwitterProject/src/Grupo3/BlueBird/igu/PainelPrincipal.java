@@ -1,6 +1,5 @@
 package Grupo3.BlueBird.igu;
 
-import grupo3.blueBird.igu.timeline.TimelineView;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -25,6 +24,7 @@ import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import Grupo3.BlueBird.igu.timeline.TimelineView;
 import Grupo3.BlueBird.logica.MeuTwitter;
 import Grupo3.BlueBird.logica.timeline.Timeline;
 import Grupo3.BlueBird.logica.timeline.UnknownUserTwitterException;
