@@ -45,6 +45,19 @@ public class Janela extends JFrame implements ActionListener {
 		switch (opcao) {
 		case REFRESHTIMELINE:
 			try {
+				painelPrincipal.setUserTimeline(false);
+				painelPrincipal.executaRefreshTimeline();
+			}catch (UnknownUserTwitterException e) {
+				JOptionPane.showMessageDialog(this, "Nenhum Tweeter selecionado!\n Selecione um Tweeter, por favor!'!\n",
+						"Erro", JOptionPane.ERROR_MESSAGE);
+			}catch (TwitterException e) {
+				JOptionPane.showMessageDialog(this, "Ocorreu um erro durante a requisição da 'timeline'!\n" +
+						" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+			break;
+		case REFRESHUSERTIMELINE:
+			try {
+				painelPrincipal.setUserTimeline(true);
 				painelPrincipal.executaRefreshTimeline();
 			}catch (UnknownUserTwitterException e) {
 				JOptionPane.showMessageDialog(this, "Nenhum Tweeter selecionado!\n Selecione um Tweeter, por favor!'!\n",

@@ -185,4 +185,8 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 				tweetar.setEnabled(false);
 		}
 	}
+
+	public void setUserTimeline(boolean user) {
+		timelineview.setUserTimeline(user);
+	}
 }
