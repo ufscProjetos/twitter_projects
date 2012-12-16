@@ -54,6 +54,7 @@ public class PainelDetalheAmigos extends JPanel {
 							mt.excluiAmigo(user.getId());
 							JOptionPane.showMessageDialog(null, "Você excluiu " + user.getScreenName() + "!" 
 									, "Amigo excluído", JOptionPane.INFORMATION_MESSAGE);
+							PainelEsquerda.updateAmigos();
 						} catch (TwitterException te) {
 							JOptionPane.showMessageDialog(null, "Não foi possível excluir " + user.getScreenName() + "!",
 									"Erro", JOptionPane.ERROR_MESSAGE);				

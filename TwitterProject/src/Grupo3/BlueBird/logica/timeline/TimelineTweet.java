@@ -36,6 +36,8 @@ public class TimelineTweet {
 	}
 	
 	public String toString() {
-	    return("<html>"+getUserName() + " - " + "@" +  getUserScreenName() + "  " + getTime() + "<br>" +"<p style=\"width:300px; font-size:8px;\">" + getText()+ "</p>"+"</html>");
+	    return("<html><p style=\"color:#008B00; font-size:8px;\">"+getUserName() + " - " + "@" +
+	    		getUserScreenName() + "  " + getTime() + "</p>" +"<p style=\"width:300px; font-size:8px;\">" + 
+	    		getText()+ "</p>"+"</html>");
 	 }
 }

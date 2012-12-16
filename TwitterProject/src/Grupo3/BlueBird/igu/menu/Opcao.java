@@ -2,7 +2,7 @@ package Grupo3.BlueBird.igu.menu;
 
 /**
  * define as opções do menu, utilizadas no metodo setActionCommand(Opcao.SAIR.name()) que é utilizado 
- * na classe barramenulogin 
+ * na classe barramenu 
  */
 public enum Opcao {
 		REFRESHTIMELINE,
@@ -10,10 +10,14 @@ public enum Opcao {
 		SAIR, 
 		VERTIMELINE,
 		AJREFRESHTIMELINE,
+		RETWEET,
 		TWEETAR,
 		PESQUISAR,
 		QUANTOSSIGO,
 		QUANTOSMESEGUEM,
+		SEGUIR,
+		RETWEETAR,
+		VERTIMELINEAMIGO,
+		DESFAZERAMIZADE,
 		SOBRE, 
-		UTILIZACAO 
 }

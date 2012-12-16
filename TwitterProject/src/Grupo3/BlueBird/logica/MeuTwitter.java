@@ -101,4 +101,20 @@ public class MeuTwitter {
 		 twitter.createFriendship(id);
 	}
 
+	public String getSeguir() {
+		return ajuda.getSeguir();
+	}
+
+	public String getRetweetar() {
+		return ajuda.getRetweetar();
+	}
+
+	public String getVerTimelineAmigo() {
+		return ajuda.getVerTimelineAmigo();
+	}
+
+	public String getDeixarDeSeguir() {
+		return ajuda.getDeixarDeSeguir();
+	}
+
 }

@@ -22,11 +22,14 @@ public class BarraMenu extends JMenuBar {
 		item.setActionCommand(Opcao.REFRESHTIMELINE.name());
 		item.addActionListener(janela);
 		menu.add(item);
-
-		menu.add(new JSeparator());
 		
 		item = new JMenuItem("Refresh User Timeline");
 		item.setActionCommand(Opcao.REFRESHUSERTIMELINE.name());
+		item.addActionListener(janela);
+		menu.add(item);		
+
+		item = new JMenuItem("Retweet");
+		item.setActionCommand(Opcao.RETWEET.name());
 		item.addActionListener(janela);
 		menu.add(item);
 
@@ -89,6 +92,28 @@ public class BarraMenu extends JMenuBar {
 		
 		item = new JMenuItem("Funcionalidades TF3");
 		item.setEnabled(false);
+		menu.add(item);
+
+		menu.add(new JSeparator());
+		
+		item = new JMenuItem("Como seguir alguém");
+		item.setActionCommand(Opcao.SEGUIR.name());
+		item.addActionListener(janela);
+		menu.add(item);
+		
+		item = new JMenuItem("Como Retweetar");
+		item.setActionCommand(Opcao.RETWEETAR.name());
+		item.addActionListener(janela);
+		menu.add(item);
+		
+		item = new JMenuItem("Como ver timeline amigo");
+		item.setActionCommand(Opcao.VERTIMELINEAMIGO.name());
+		item.addActionListener(janela);
+		menu.add(item);
+		
+		item = new JMenuItem("Como desfazer amizade");
+		item.setActionCommand(Opcao.DESFAZERAMIZADE.name());
+		item.addActionListener(janela);
 		menu.add(item);
 
 		menu.add(new JSeparator());

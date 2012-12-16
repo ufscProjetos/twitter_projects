@@ -8,7 +8,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-
 import Grupo3.BlueBird.igu.paineis.PainelDetalheAmigos;
 import Grupo3.BlueBird.logica.MeuTwitter;
 
@@ -25,17 +24,13 @@ public class LabelPersonalizado extends JLabel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		defineJanelaDetalhe();
-
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {

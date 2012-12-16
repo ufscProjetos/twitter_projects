@@ -45,6 +45,25 @@ public class Ajuda {
 				"\nvocê atualize a visualização da sua Timeline.\n Fazer isso é muito simples: no menu, escolha opções e depois\n \"Refresh Timeline\". " +
 				"Feito isso, os tweets mais recentes serão\n exibidos na sua linha do tempo.";
 	}
+	
+	public String getSeguir() {
+		return "Para seguir alguém, no resultado da busca clique no botão\n \"Seguir\" logo abaixo do status! ";
+	}
+	
+	public String getRetweetar() {
+		return "Quer retweetar o status de um amigo? Para isso basta\n selecionar o status na timeline e, no menu \"Opções\", clicar em\n " +
+				"\"Retweetar\"!";
+	}
+	
+	public String getVerTimelineAmigo() {
+		return "O Blue Bird permite que você visualize a timeline dos seus amigos.\n Para isso selecione, na sua timeline, o status do amigo o qual\n você" +
+				" quer ver a timeline, vá no menu \"Opções\" e clique em\n \"Refresh User Timeline\"!";
+	}
+	
+	public String getDeixarDeSeguir() {
+		return "Se você quiser deixar de seguir algum amigo, o Blue Bird oferece\n esta opção. Na lateral esquerda clique no numero de " +
+				"amigos\n para que a relação seja exibida. Escolha um amigo e clique em\n \"Excluir\"!";
+	}
 
 
 }

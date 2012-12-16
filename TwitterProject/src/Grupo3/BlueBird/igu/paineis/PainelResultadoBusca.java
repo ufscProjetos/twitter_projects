@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -58,8 +59,10 @@ public class PainelResultadoBusca extends JPanel {
 				JPanel painelInfo = new JPanel();
 				painelInfo.setLayout(new BoxLayout(painelInfo, BoxLayout.Y_AXIS));
 				painelInfo.setBackground(Color.WHITE);
-				painelInfo.add(new JLabel("<html>@" + tweet_retornado.getFromUserName() + "<p style=\"width:300px; font-size:8px;\">"
-								+ tweet_retornado.getText() + "</p>"));
+				painelInfo.add(new JLabel("<html><p style=\"font-size:8px;\">@" + tweet_retornado.getFromUserName() +
+								"</p><p style=\"width:300px; font-size:8px;\">"
+								+ tweet_retornado.getText() + "<span style=\"color:#008B00; font-size:7px;\"> - " +
+								getTime(tweet_retornado)+ "</span></p></html>"));
 				JButton btSeguir = new BotaoPersonalizado("Seguir", 14, 13);				
 				btSeguir.addActionListener(new ActionListener() {					
 					@Override
@@ -68,6 +71,7 @@ public class PainelResultadoBusca extends JPanel {
 							mt.seguir(tweet_retornado.getFromUserId());
 							JOptionPane.showMessageDialog(null, "Você está seguindo " + tweet_retornado.getFromUserName() +
 									" !" , "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+							PainelEsquerda.updateAmigos();
 						} catch (TwitterException e1) {
 							JOptionPane.showMessageDialog(null, "Não foi possível seguir " + tweet_retornado.getFromUserName() +
 									" !", "Erro", JOptionPane.ERROR_MESSAGE);			
@@ -92,4 +96,9 @@ public class PainelResultadoBusca extends JPanel {
 		painelIndividual.setBackground(Color.WHITE);
 		return painelIndividual;
 	}
+	
+	private String getTime(Tweet tweet){
+		return (new SimpleDateFormat("HH:mm:ss - dd/MM/yyyy")).format(tweet.getCreatedAt());  
+	}
+	
 }

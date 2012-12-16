@@ -69,6 +69,14 @@ public class Janela extends JFrame implements ActionListener {
 						" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 			break;
+		case RETWEET:
+			try {
+			painelPrincipal.retweet();
+			}catch (TwitterException e) {
+			JOptionPane.showMessageDialog(this, "Ocorreu um erro durante retweet'!\n" +
+			" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+			break;
 		case VERTIMELINE:
 			pa = new JanelaAjuda("Como ver minha timeline?", mt.getComoVisualizarTimeline());
 			break;
@@ -86,6 +94,18 @@ public class Janela extends JFrame implements ActionListener {
 			break;
 		case AJREFRESHTIMELINE:
 			pa = new JanelaAjuda("Como fazer o \"refresh\" da timeline", mt.getFazerRefreshTimeline());
+			break;
+		case SEGUIR:
+			pa = new JanelaAjuda("Como seguir alguém?", mt.getSeguir());
+			break;
+		case RETWEETAR:
+			pa = new JanelaAjuda("Como retweetar um status?", mt.getRetweetar());
+			break;
+		case VERTIMELINEAMIGO:
+			pa = new JanelaAjuda("Como ver a timeline de um amigo?", mt.getVerTimelineAmigo());
+			break;
+		case DESFAZERAMIZADE:
+			pa = new JanelaAjuda("Como deixar de seguir um amigo?", mt.getDeixarDeSeguir());
 			break;
 		case SOBRE:
 			pa = new JanelaAjuda("Sobre o Blue Bird", mt.getSobreMim());

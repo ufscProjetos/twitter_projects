@@ -14,11 +14,12 @@ import Grupo3.BlueBird.logica.MeuTwitter;
 
 public class PainelEsquerda extends JPanel {
 	
-	private MeuTwitter mt;
-	private JLabel seguidores, amigos;
+	private static MeuTwitter mt;
+	private JLabel seguidores;
+	private static JLabel amigos;
 	
 	public PainelEsquerda(MeuTwitter meuTwitter){
-		this.mt = meuTwitter;
+		PainelEsquerda.mt = meuTwitter;
 		defineComponentes();
 		organizaComponentes();
 	}
@@ -49,25 +50,31 @@ public class PainelEsquerda extends JPanel {
 		this.seguidores.setMaximumSize(new Dimension(60, 60));
 	}
 	
-	private void defineOpcaoAmigos(){
-		int amigos;
+	private static void defineOpcaoAmigos(){
+		int friends;
 		try {
-			amigos = mt.getNumeroAmigos();
+			friends = mt.getNumeroAmigos();
 		} catch (TwitterException e) {
-			JOptionPane.showMessageDialog(this, "Não foi possível obter o\n número de amigos.",
+			JOptionPane.showMessageDialog(null, "Não foi possível obter o\n número de amigos.",
 					"Número de amigos indisponível", JOptionPane.INFORMATION_MESSAGE);
-			amigos = 0;
+			friends = 0;
 		}
-		this.amigos = new LabelPersonalizado("<html>" + String.valueOf(amigos) + 
+		PainelEsquerda.amigos = new LabelPersonalizado("<html>" + String.valueOf(friends) + 
 				"<p style=\"font-size:6px;\">Following</p></html>", SwingConstants.CENTER, mt);
-		this.amigos.setForeground(Color.WHITE);
-		this.amigos.setMinimumSize(new Dimension(60, 60));
-		this.amigos.setMaximumSize(new Dimension(60, 60));
+		PainelEsquerda.amigos.setForeground(Color.WHITE);
+		PainelEsquerda.amigos.setMinimumSize(new Dimension(60, 60));
+		PainelEsquerda.amigos.setMaximumSize(new Dimension(60, 60));
 	}
 
-	private void organizaComponentes() {	
+	private void organizaComponentes() {
 		this.add(seguidores);
 		this.add(amigos);	
+	}
+	
+	public static void updateAmigos() throws TwitterException {
+		String text = "<html>" + String.valueOf(mt.getNumeroAmigos()) + 
+				"<p style=\"font-size:6px;\">Following</p></html>";
+		PainelEsquerda.amigos.setText(text);
 	}
 
 }

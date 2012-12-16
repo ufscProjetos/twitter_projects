@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
 import javax.swing.GroupLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -23,13 +22,9 @@ import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-
-<<<<<<< HEAD:TwitterProject/src/Grupo3/BlueBird/igu/paineis/PainelPrincipal.java
 import Grupo3.BlueBird.igu.AreaTextoPersonalizada;
 import Grupo3.BlueBird.igu.BotaoPersonalizado;
 import Grupo3.BlueBird.igu.Janela;
-=======
->>>>>>> e579ca45cf1767f80d6fa3ee8474aa9557cd246e:TwitterProject/src/Grupo3/BlueBird/igu/PainelPrincipal.java
 import Grupo3.BlueBird.igu.timeline.TimelineView;
 import Grupo3.BlueBird.logica.MeuTwitter;
 import Grupo3.BlueBird.logica.timeline.Timeline;
@@ -89,7 +84,7 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 		        	try {
 		        		executaRefreshTimeline();
 					}catch (UnknownUserTwitterException e) {
-						JOptionPane.showMessageDialog(_this, "Nenhum Tweeter selecionado!\n Selecione um Tweeter, por favor!'!\n",
+						JOptionPane.showMessageDialog(_this, "Nenhum Tweet selecionado!\n Selecione um Tweet, por favor!\n",
 								"Erro", JOptionPane.ERROR_MESSAGE);
 					} catch (TwitterException e) {
 						JOptionPane.showMessageDialog(_this, "Ocorreu um erro durante a requisição da 'timeline'!\n",
@@ -169,18 +164,17 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		try {
 			atualizaStatus.atualizaStatus(campoTweet.getText());
-			campoTweet.setText("");
-			tweetar.setEnabled(false);
-			executaRefreshTimeline();
 		} catch (TwitterException te) {
 			if (te.getStatusCode() == 403){
-				JOptionPane.showMessageDialog(this, "Status não atualizado.\n Tente novamente mais tarde!. ", 
+				JOptionPane.showMessageDialog(this, "Status não atualizado.\n Tente novamente mais tarde! ", 
 						"Erro", JOptionPane.ERROR_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(this, "Ação não realizada!\n Verifique sua conexão com a internet.", 
 						"Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		campoTweet.setText("");
+		tweetar.setEnabled(false);
 	}
 	
 	class Validador extends KeyAdapter {
@@ -195,5 +189,11 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 
 	public void setUserTimeline(boolean user) {
 		timelineview.setUserTimeline(user);
+	}
+
+	public void retweet() throws TwitterException{
+		timelineview.retweet();
+		JOptionPane.showMessageDialog(this, "Status retweetado! ", 
+				"Sucesso", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
