@@ -35,6 +35,14 @@ public class BarraMenu extends JMenuBar {
 
 		menu.add(new JSeparator());
 		
+		
+		item = new JMenuItem("Retweet");
+		item.setActionCommand(Opcao.RETWEET.name());
+		item.addActionListener(janela);
+		menu.add(item);
+
+		menu.add(new JSeparator());
+		
 		item = new JMenuItem("Sair"); // define o item desta opção
 		item.setActionCommand(Opcao.SAIR.name()); // inclui o evento desta opção do menu à classe ActionListener
 		item.addActionListener(janela); // Informa onde será capturado o evento (em qual classe) está implementado o metodo actionPerformed 

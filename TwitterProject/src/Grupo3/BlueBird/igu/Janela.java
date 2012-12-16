@@ -71,10 +71,17 @@ public class Janela extends JFrame implements ActionListener {
 			break;
 		case RETWEET:
 			try {
+<<<<<<< HEAD
 			painelPrincipal.retweet();
 			}catch (TwitterException e) {
 			JOptionPane.showMessageDialog(this, "Ocorreu um erro durante retweet'!\n" +
 			" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
+=======
+				painelPrincipal.retweet();
+			}catch (TwitterException e) {
+				JOptionPane.showMessageDialog(this, "Ocorreu um erro durante retweet'!\n" +
+						" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
+>>>>>>> 1e5cbc42b0002eb584e9e7f3fa141f26858fa1fe
 			}
 			break;
 		case VERTIMELINE:
