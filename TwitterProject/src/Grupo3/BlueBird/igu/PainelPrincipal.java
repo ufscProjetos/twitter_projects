@@ -189,4 +189,9 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 	public void setUserTimeline(boolean user) {
 		timelineview.setUserTimeline(user);
 	}
+
+
+	public void retweet() throws TwitterException{
+		timelineview.retweet();
+	}
 }

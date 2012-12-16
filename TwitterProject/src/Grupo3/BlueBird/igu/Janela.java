@@ -67,6 +67,14 @@ public class Janela extends JFrame implements ActionListener {
 						" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 			break;
+		case RETWEET:
+			try {
+				painelPrincipal.retweet();
+			}catch (TwitterException e) {
+				JOptionPane.showMessageDialog(this, "Ocorreu um erro durante retweet'!\n" +
+						" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+			break;
 		case VERTIMELINE:
 			pa = new JanelaAjuda("Como ver minha timeline?", mt.getComoVisualizarTimeline());
 			break;
