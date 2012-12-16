@@ -7,7 +7,6 @@ package Grupo3.BlueBird.igu.menu;
 public enum Opcao {
 		REFRESHTIMELINE,
 		REFRESHUSERTIMELINE,
-		RETWEET,
 		SAIR, 
 		VERTIMELINE,
 		AJREFRESHTIMELINE,
@@ -20,9 +19,5 @@ public enum Opcao {
 		RETWEETAR,
 		VERTIMELINEAMIGO,
 		DESFAZERAMIZADE,
-		SOBRE, 
-<<<<<<< HEAD
-=======
-		UTILIZACAO
->>>>>>> 1e5cbc42b0002eb584e9e7f3fa141f26858fa1fe
+		SOBRE
 }

@@ -62,7 +62,7 @@ public class Janela extends JFrame implements ActionListener {
 				painelPrincipal.setUserTimeline(true);
 				painelPrincipal.executaRefreshTimeline();
 			}catch (UnknownUserTwitterException e) {
-				JOptionPane.showMessageDialog(this, "Nenhum Tweeter selecionado!\n Selecione um Tweeter, por favor!'!\n",
+				JOptionPane.showMessageDialog(this, "Nenhum Tweet selecionado!\n Selecione um Tweet, por favor!\n",
 						"Erro", JOptionPane.ERROR_MESSAGE);
 			}catch (TwitterException e) {
 				JOptionPane.showMessageDialog(this, "Ocorreu um erro durante a requisição da 'timeline'!\n" +
@@ -71,17 +71,13 @@ public class Janela extends JFrame implements ActionListener {
 			break;
 		case RETWEET:
 			try {
-<<<<<<< HEAD
-			painelPrincipal.retweet();
-			}catch (TwitterException e) {
-			JOptionPane.showMessageDialog(this, "Ocorreu um erro durante retweet'!\n" +
-			" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
-=======
 				painelPrincipal.retweet();
+			}catch (UnknownUserTwitterException e) {
+				JOptionPane.showMessageDialog(this, "Nenhum Tweet selecionado!\n Selecione um Tweet, por favor!\n",
+						"Erro", JOptionPane.ERROR_MESSAGE);
 			}catch (TwitterException e) {
 				JOptionPane.showMessageDialog(this, "Ocorreu um erro durante retweet'!\n" +
-						" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
->>>>>>> 1e5cbc42b0002eb584e9e7f3fa141f26858fa1fe
+				" Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 			break;
 		case VERTIMELINE:

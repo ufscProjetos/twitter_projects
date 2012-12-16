@@ -37,9 +37,11 @@ public class Timeline {
 		}
 	}
 	
-	public void retweetFocusedMessage() throws TwitterException{
+	public void retweetFocusedMessage() throws UnknownUserTwitterException, TwitterException{
 		if (_currentId != 0){
 			_twitter.retweetStatus(_currentId);
+		}else {
+			throw new UnknownUserTwitterException (new Exception());
 		}
 	}
 

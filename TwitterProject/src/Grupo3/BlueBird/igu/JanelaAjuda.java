@@ -26,8 +26,8 @@ public class JanelaAjuda extends JDialog {
 	}
 
 	private void defineComponentes(String tituloAjuda, String textoAjuda) {
-		setMinimumSize(new Dimension(502, 250));
-		setMaximumSize(new Dimension(502, 250));
+		setMinimumSize(new Dimension(505, 250));
+		setMaximumSize(new Dimension(505, 250));
 		setLocationRelativeTo(null);
 		setVisible(true);
 		painelPrincipal = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));

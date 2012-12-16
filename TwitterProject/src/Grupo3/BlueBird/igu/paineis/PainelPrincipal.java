@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -173,6 +175,7 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 						"Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		temporizador();
 		campoTweet.setText("");
 		tweetar.setEnabled(false);
 	}
@@ -196,4 +199,17 @@ public class PainelPrincipal extends JPanel implements ActionListener{
 		JOptionPane.showMessageDialog(this, "Status retweetado! ", 
 				"Sucesso", JOptionPane.INFORMATION_MESSAGE);
 	}
+	
+	private void temporizador() {
+		Timer temporizador = new Timer();
+        temporizador.schedule(new ExecutaTarefa(), 5000);
+	}
+	
+	class ExecutaTarefa extends TimerTask {
+        public void run() {
+        	try {
+				executaRefreshTimeline();
+			} catch (TwitterException e) {}
+        }
+    }
 }

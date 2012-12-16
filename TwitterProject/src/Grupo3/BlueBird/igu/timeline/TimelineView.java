@@ -33,7 +33,7 @@ public class TimelineView {
 		return _container;
 	}
 
-	public void updateTimeline() throws UnknownUserTwitterException,TwitterException {
+	public void updateTimeline() throws UnknownUserTwitterException, TwitterException {
 		if (_userTimeline) {
 			_listModel = new TimelineListModel(_timeline.refreshUserTimeline());
 		}else{
@@ -50,7 +50,7 @@ public class TimelineView {
 		_container.add(listPane);
 	}
 
-	public void retweet() throws TwitterException {
+	public void retweet() throws UnknownUserTwitterException, TwitterException {
 		_timeline.retweetFocusedMessage();
 	}
 	
