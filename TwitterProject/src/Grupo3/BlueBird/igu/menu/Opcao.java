@@ -6,6 +6,7 @@ package Grupo3.BlueBird.igu.menu;
  */
 public enum Opcao {
 		REFRESHTIMELINE,
+		REFRESHUSERTIMELINE,
 		SAIR, 
 		VERTIMELINE,
 		AJREFRESHTIMELINE,
@@ -13,5 +14,6 @@ public enum Opcao {
 		PESQUISAR,
 		QUANTOSSIGO,
 		QUANTOSMESEGUEM,
-		SOBRE, UTILIZACAO
+		SOBRE, 
+		UTILIZACAO 
 }

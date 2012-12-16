@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 import twitter4j.TwitterException;
 import Grupo3.BlueBird.logica.timeline.Timeline;
 import Grupo3.BlueBird.logica.timeline.TimelineTweet;
+import Grupo3.BlueBird.logica.timeline.UnknownUserTwitterException;
 
 public class TimelineView {
 
@@ -20,9 +21,11 @@ public class TimelineView {
 	private Timeline _timeline;
 	private TimelineListModel _listModel;
 	private JList<Object> _timelineList;
+	private boolean _userTimeline;
 
 	public TimelineView(Timeline timeline) throws TwitterException {
 		_timeline = timeline;
+		_userTimeline = false;
 		updateTimeline();
 	}
 
@@ -30,8 +33,12 @@ public class TimelineView {
 		return _container;
 	}
 
-	public void updateTimeline() throws TwitterException {
-		_listModel = new TimelineListModel(_timeline.refreshHomeTimeline());
+	public void updateTimeline() throws UnknownUserTwitterException,TwitterException {
+		if (_userTimeline) {
+			_listModel = new TimelineListModel(_timeline.refreshUserTimeline());
+		}else{
+			_listModel = new TimelineListModel(_timeline.refreshHomeTimeline());
+		}
 		_timelineList = new JList<>(_listModel);
 		_timelineList.setCellRenderer(new TimelineRenderer());
 		_timelineList.setVisibleRowCount(6);
@@ -47,6 +54,10 @@ public class TimelineView {
 		_timeline.retweetFocusedMessage();
 	}
 	
+	public void setUserTimeline(boolean user) {
+		_userTimeline = user;
+	}
+	
 	private class TimelineListSelection implements ListSelectionListener {
 
 		JList<Object> _list;
@@ -59,6 +70,7 @@ public class TimelineView {
 			 if (!event.getValueIsAdjusting()){ 
 				 TimelineTweet tweet = (TimelineTweet) _list.getSelectedValue();
 				 _timeline.setCurrentId(tweet.getStatus().getId());
+				 _timeline.setUser(tweet.getStatus().getUser());
 			 }
 		}
 	}

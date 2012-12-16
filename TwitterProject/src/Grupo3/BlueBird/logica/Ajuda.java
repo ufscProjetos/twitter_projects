@@ -3,9 +3,9 @@ package Grupo3.BlueBird.logica;
 public class Ajuda {
 	
 	public String getComoVisualizarTimeline(){
-		return "Logo que você abre o Blue Bird é disponibilizada a visualização\n da sua timeline. Os Tweets mais recentes dos " +
-				"seu amigos são\n exibidos em ordem cronológica.\n Você pode ainda pesquisar por Tweets ou por pessoas, para isso\n " +
-				"veja o item \"Pesquisar\", do menu.";
+		return "Logo que você abre o Blue Bird é disponibilizada a visualização\n da sua timeline ou a timeline de um Tweeter. \n" +
+				"Os Tweets mais recentes dos seu amigos são\n exibidos em ordem cronológica.\n Você pode ainda pesquisar por Tweets\n" +
+				"ou por pessoas, para isso veja o item \"Pesquisar\", do menu.";
 	}
 	
 	public String getComoTweetar(){
